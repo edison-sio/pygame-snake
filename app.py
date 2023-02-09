@@ -1,7 +1,7 @@
 import pygame as pg
 import os
 
-from game import Game, LEFT, RIGHT, UP, DOWN
+from game import Game, LEFT, RIGHT, UP, DOWN, Direction, Position
 
 # WIN = pg.display.set_mode((500, 500))
 clock = pg.time.Clock()
@@ -28,8 +28,18 @@ class SnakeGameWindow:
         # Game init
         # self.background = pg.image.load(os.path.join('Assets', {theme}, 'background.png'))
         self.background = (25, 25, 25)
-        self.head = pg.transform.scale(pg.image.load(os.path.join('assets', theme, 'body.png')), (self.block_side, self.block_side))
-        self.body = pg.transform.scale(pg.image.load(os.path.join('Assets', theme, 'body.png')), (self.block_side, self.block_side))
+        self.head_up = pg.transform.scale(pg.image.load(os.path.join('assets', theme, 'body.png')), (self.block_side, self.block_side))
+        self.head_down = pg.transform.scale(pg.image.load(os.path.join('assets', theme, 'body.png')), (self.block_side, self.block_side))
+        self.head_left = pg.transform.scale(pg.image.load(os.path.join('assets', theme, 'body.png')), (self.block_side, self.block_side))
+        self.head_right = pg.transform.scale(pg.image.load(os.path.join('assets', theme, 'body.png')), (self.block_side, self.block_side))
+
+        self.body_1 = pg.transform.scale(pg.image.load(os.path.join('Assets', theme, 'body.png')), (self.block_side, self.block_side))
+        self.body_2 = pg.transform.scale(pg.image.load(os.path.join('Assets', theme, 'body.png')), (self.block_side, self.block_side))
+        self.body_3 = pg.transform.scale(pg.image.load(os.path.join('Assets', theme, 'body.png')), (self.block_side, self.block_side))
+        self.body_4 = pg.transform.scale(pg.image.load(os.path.join('Assets', theme, 'body.png')), (self.block_side, self.block_side))
+        self.body_5 = pg.transform.scale(pg.image.load(os.path.join('Assets', theme, 'body.png')), (self.block_side, self.block_side))
+        self.body_6 = pg.transform.scale(pg.image.load(os.path.join('Assets', theme, 'body.png')), (self.block_side, self.block_side))
+
         self.food = pg.transform.scale(pg.image.load(os.path.join('Assets', theme, 'food.png')), (self.block_side, self.block_side))
         self.empty = pg.transform.scale(pg.image.load(os.path.join('Assets', theme, 'empty.png')), (self.block_side, self.block_side))
         
@@ -87,6 +97,38 @@ class SnakeGameWindow:
         self.win.blit(self.food, ((food_position.x+1) * self.block_side, (food_position.y+1) * self.block_side))
                 
         pg.display.update()
+
+    def snake_position_to_image_list(self, snake_positions: list[Position]) -> list:
+        if snake_positions == []:
+            return []
+        if len(snake_positions) == 1:
+            pos = snake_positions[0]
+            if pos == UP:
+                return self.head_up
+            elif pos == DOWN:
+                return self.head_down
+            elif pos == LEFT:
+                return self.head_left
+            elif pos == RIGHT:
+                return self.head_right
+        
+        prev_pos = None
+        pos = snake_positions[0]
+        next_pos = snake_positions[1]
+        index = 1
+        
+        while index < len(snake_positions):
+            if prev_pos.x == pos.x and pos.x == next_pos.x:
+                self.body_1
+            elif prev_pos.y == pos.y and pos.y == next_pos.y:
+                self.body_2
+            elif prev_pos.x == pos.x and pos.y == next_pos.y:
+                self.body_3
+            elif prev_pos.y == pos.y and pos.x == next_pos.x:
+                self.body_3
+
+
+
 
 if __name__ == '__main__':
     app = SnakeGameWindow()
